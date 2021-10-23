@@ -7,8 +7,9 @@ exports.sendMail = asyncHandler(async(req, res) => {
     const {
         // emaila,
         email,
-        obj,
-        msg
+        subject,
+        message,
+        name
     } = req.body
     console.log(req.body)
 
@@ -23,9 +24,9 @@ exports.sendMail = asyncHandler(async(req, res) => {
 
     var mailOptions = {
         from: "samplateforme2021@gmail.com",
-        to: req.body.email,
-        subject: req.body.obj,
-        text: req.body.msg
+        to: email,
+        subject: "email from " + email + "name" + name + " about " + subject,
+        text: message
     };
 
     transporter.sendMail(mailOptions, function(error, info) {
