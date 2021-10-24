@@ -12,28 +12,28 @@ var app = express();
 //////////////////////////////////////////////////////////
 // Set up mongoose connection
 //let dev_db_url = 'mongodb+srv://upkurs:dipPWu7rFz4LzGp7@upkurs-dttpu.mongodb.net/upkurs?retryWrites=true&w=majority';
-const mongoose = require("mongoose");
-//let dev_db_url = 'mongodb+srv://upkurs:dipPWu7rFz4LzGp7@upkurs-dttpu.mongodb.net/upkurs?retryWrites=true&w=majority';
-// let dev_db_url = "mongodb://localhost:27017/upkurs?retryWrites=true&w=majority";
-let dev_db_url = "mongodb+srv://restapi.ii97j.mongodb.net/myFirstDatabase";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(
-    mongoDB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-    },
-    (err) => {
-        if (err) console.log("Error during mongoose connection: " + err);
-        else {
-            console.log("Successful mongoose connection.");
-        }
-    }
-);
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+// const mongoose = require("mongoose");
+// //let dev_db_url = 'mongodb+srv://upkurs:dipPWu7rFz4LzGp7@upkurs-dttpu.mongodb.net/upkurs?retryWrites=true&w=majority';
+// // let dev_db_url = "mongodb://localhost:27017/upkurs?retryWrites=true&w=majority";
+// let dev_db_url = "mongodb+srv://restapi.ii97j.mongodb.net/myFirstDatabase";
+// const mongoDB = process.env.MONGODB_URI || dev_db_url;
+// mongoose.connect(
+//     mongoDB, {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//         useFindAndModify: false,
+//         useCreateIndex: true,
+//     },
+//     (err) => {
+//         if (err) console.log("Error during mongoose connection: " + err);
+//         else {
+//             console.log("Successful mongoose connection.");
+//         }
+//     }
+// );
+// mongoose.Promise = global.Promise;
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 
 //////////////////////////////////////////////////////////
