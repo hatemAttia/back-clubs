@@ -2,10 +2,9 @@ var nodemailer = require('nodemailer');
 const asyncHandler = require('express-async-handler');
 
 exports.sendMail = asyncHandler(async(req, res) => {
-    // const emailExists = await User.findOne({ email: req.body.email });
-    // if (emailExists) return res.status(400).send('Email is already exists ');
+
     const {
-        // emaila,
+
         email,
         subject,
         message,
