@@ -111,13 +111,13 @@ exports.updateClubs = async(req, res) => {
 
 
 exports.updateImage = async(req, res) => {
-    console.log(req.params.id);
+    console.log(req.file.filename);
     console.log("hello");
 
     const club = await clubModel.findById(req.params.id)
     if (club) {
 
-        club.image = req.body.image || club.image
+        club.image = req.file.filename || club.image
 
 
         const updatedimage = await club.save()
