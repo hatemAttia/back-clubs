@@ -14,6 +14,7 @@ export default (app) => {
     app.route("/ajouter-club").post(clubController.postClub);
     app.route("/supprime/:id").delete(clubController.deleteClub);
     app.route("/modifier/:id").put(clubController.updateClubs);
+    app.route("/modifier-image/:id").put(clubController.updateImage);
 
     app.route("/send").post(sendController.sendMail);
     app.route("/upload-img").post(uploadimages.single("file"), (req, res) => {

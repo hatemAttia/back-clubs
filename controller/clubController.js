@@ -11,7 +11,7 @@ exports.postClub = async(req, res, next) => {
         adresse: req.body.adresse,
         longitude: req.body.longitude,
         latitude: req.body.latitude,
-        category: mongoose.Types.ObjectId(req.body.category),
+        category: mongoose.Types.ObjectId(req.body.category.id),
         // category: req.body.category._id,
         email: req.body.email,
         num: req.body.num
@@ -101,6 +101,28 @@ exports.updateClubs = async(req, res) => {
         const updatedClub = await club.save()
 
         res.json(updatedClub)
+
+
+    } else {
+        res.status(404)
+        throw new Error('User not found')
+    }
+}
+
+
+exports.updateImage = async(req, res) => {
+    console.log(req.params.id);
+    console.log("hello");
+
+    const club = await clubModel.findById(req.params.id)
+    if (club) {
+
+        club.image = req.body.image || club.image
+
+
+        const updatedimage = await club.save()
+
+        res.json(updatedimage)
 
 
     } else {
