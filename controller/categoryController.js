@@ -5,6 +5,13 @@ const categoryModel = require("../models/category");
 exports.welcome = async(req, res) => {
     res.json("Hello world!!")
 };
+exports.getCategory = async(req, res, next) => {
+    //<= $lte >= gte  age:{$lte:10} < lt > gt ==eq $in  nin []
+    //find(element=>element.modelId==req.params.id)
+    await categoryModel.find()
+        .then(objet => res.status(200).json(objet))
+        .catch(err => res.status(400).json("Error getting objet"))
+}
 
 
 exports.postCategory = async(req, res, next) => {

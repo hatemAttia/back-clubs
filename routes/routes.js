@@ -10,11 +10,13 @@ export default (app) => {
     app.route("/").get(categoryController.welcome);
     app.route("/ajouter").post(categoryController.postCategory);
     app.route("/get-club").get(clubController.getClub);
+    app.route("/category").get(categoryController.getCategory);
     app.route("/ajouter-club").post(clubController.postClub);
+    app.route("/supprime/:id").delete(clubController.deleteClub);
+    app.route("/modifier/:id").put(clubController.updateClubs);
+
     app.route("/send").post(sendController.sendMail);
-    app.route("/upload-img").post(uploadimages.single("file"), (req, res) => {
-        res.send("eeeee")
-    });
+    app.route("/upload-img/:id").post(uploadimages.single("file"),clubController.updateImage);
     // app.route("/ajouter").post((req, res) => {
     //     welcomeController.postUser
     // });
