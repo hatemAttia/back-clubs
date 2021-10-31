@@ -3,7 +3,7 @@ const categoryModel = require("../models/category");
 const mongoose = require('mongoose');
 
 
-exports.postClub = async(req, res, next) => {
+exports.createClub = async(req, res, next) => {
     let club = new clubModel({
         name: req.body.name,
         description: req.body.description,
@@ -34,7 +34,7 @@ exports.postClub = async(req, res, next) => {
 
 
 
-exports.getClub = async(req, res, next) => {
+exports.getAllClubs = async(req, res, next) => {
     //<= $lte >= gte  age:{$lte:10} < lt > gt ==eq $in  nin []
     //find(element=>element.modelId==req.params.id)
     await clubModel.find().populate('category')
@@ -82,7 +82,7 @@ exports.deleteClub = async(req, res) => {
 // }
 
 
-exports.updateClubs = async(req, res) => {
+exports.updateClub = async(req, res) => {
     console.log(req.params.id);
     console.log("hello");
 
