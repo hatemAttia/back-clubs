@@ -4,6 +4,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+
 import routes from "./routes/routes";
 // Gives us access to variables set in the .env file
 // Middleware for request authentication.
