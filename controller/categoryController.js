@@ -5,7 +5,7 @@ const categoryModel = require("../models/category");
 exports.welcome = async(req, res) => {
     res.json("Hello world!!")
 };
-exports.getCategory = async(req, res, next) => {
+exports.getCategories = async(req, res, next) => {
     //<= $lte >= gte  age:{$lte:10} < lt > gt ==eq $in  nin []
     //find(element=>element.modelId==req.params.id)
     await categoryModel.find()
@@ -14,7 +14,7 @@ exports.getCategory = async(req, res, next) => {
 }
 
 
-exports.postCategory = async(req, res, next) => {
+exports.createCategory = async(req, res, next) => {
     let category = new categoryModel({
         name: req.body.name
     });

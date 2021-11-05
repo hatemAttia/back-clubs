@@ -7,18 +7,20 @@ import { uploadimages } from "../config/multer"
 
 
 export default (app) => {
+
     app.route("/").get(categoryController.welcome);
-    app.route("/ajouter").post(categoryController.postCategory);
-    app.route("/get-club").get(clubController.getClub);
-    app.route("/category").get(categoryController.getCategory);
-    app.route("/ajouter-club").post(clubController.postClub);
-    app.route("/supprime/:id").delete(clubController.deleteClub);
-    app.route("/modifier/:id").put(clubController.updateClubs);
 
-    app.route("/send").post(sendController.sendMail);
-    app.route("/upload-img/:id").post(uploadimages.single("file"),clubController.updateImage);
-    // app.route("/ajouter").post((req, res) => {
-    //     welcomeController.postUser
-    // });
+    ////////////////////////Category CONTROLLER///////////////////////////
+    app.route("/category").post(categoryController.createCategory);
+    app.route("/category").get(categoryController.getCategories);
 
+    ////////////////////////Club CONTROLLER///////////////////////////    
+    app.route("/club").get(clubController.getAllClubs);
+    app.route("/club").post(clubController.createClub);
+    app.route("/club/:id").delete(clubController.deleteClub);
+    app.route("/club/:id").put(clubController.updateClub);
+    app.route("/club-img/:id").post(uploadimages.single("file"),clubController.updateImage);
+
+    //////////////////////// Mail CONTROLLER///////////////////////////
+    app.route("/send").post(sendController.sendMail);  
 };
