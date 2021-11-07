@@ -130,3 +130,19 @@ exports.updateImage = async(req, res) => {
         throw new Error('User not found')
     }
 }
+
+exports.deleteMultipleClub = async(req, res) => {
+    if (req.body) {
+
+        const clubsArray = req.body;
+        clubsArray.forEach(async(element) => {
+
+            await clubModel.deleteOne({ "_id": element._id })
+
+        });
+        res.json({ message: 'Club removed' })
+    } else {
+        res.status(404)
+        throw new Error('Clubs not found')
+    }
+}

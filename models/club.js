@@ -52,4 +52,11 @@ var clubSchema = mongoose.Schema({
 
 
 });
+clubSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+
+});
+clubSchema.set('toJSON', {
+    virtuals: true,
+});
 module.exports = mongoose.model('club', clubSchema);
