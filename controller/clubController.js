@@ -17,8 +17,6 @@ exports.createClub = async(req, res, next) => {
         email: req.body.email,
         num: req.body.num
 
-
-
     });
 
     await club.save((err) => {
@@ -29,14 +27,13 @@ exports.createClub = async(req, res, next) => {
             res.json({ success: true, club })
         }
 
-
     })
 };
 
 
 
 exports.createClubs = (req, res, next) => {
-    categoryModel.findById({ _id: req.body.category.id })
+    categoryModel.findById({ _id: req.body.category })
         .exec()
         .then((category) => {
             let club = new clubModel({
@@ -46,16 +43,13 @@ exports.createClubs = (req, res, next) => {
                 adresse: req.body.adresse,
                 longitude: req.body.longitude,
                 latitude: req.body.latitude,
-
                 email: req.body.email,
                 num: req.body.num
-
-
-
             });
             club
                 .save()
                 .then((club) => {
+                   
                     category.clubs.push(club._id);
                     category
                         .save()
@@ -72,18 +66,16 @@ exports.createClubs = (req, res, next) => {
 
 
 exports.getAllClubs = async(req, res, next) => {
-    //<= $lte >= gte  age:{$lte:10} < lt > gt ==eq $in  nin []
-    //find(element=>element.modelId==req.params.id)
+    
     await clubModel.find().populate('category')
         .then(objet => res.status(200).json(objet))
         .catch(err => res.status(400).json("Error getting objet"))
 }
 
 
-exports.getClubByDomaine = async(req, res, next) => {
-    const club = await categoryModel.findById(req.body.category).populate('category', ['club', 'name'])
-        // .then(objet => res.status(200).json(objet))
-        // .catch(err => res.status(400).json("Error getting objet"))
+exports.getClubByCategory= async(req, res, next) => {
+    const club = await categoryModel.findById(req.body.category).populate('clubs')
+       
     if (club) {
         res.json(club)
     } else {
@@ -111,26 +103,6 @@ exports.deleteClub = async(req, res) => {
     }
 }
 
-// exports.updateClubs = async(id, res) => {
-//     const model = await Model.update({ _id: id }, {
-//             $set: {
-//                 "name": "hattem10",
-//                 "description": "vvhc",
-//                 "image": "adavdaz",
-//                 "adresse": "sousse",
-//                 "longitude": "9653",
-//                 "latitude": "8542",
-//                 "category": "6175a52967bee5227094a7bd",
-
-//                 "email": "hanzoutib@gmail.com",
-//                 "num": "98745612"
-//             }
-//         }).then(() => {
-//             res.status(200).json(' Deleted')
-//             console.log(model + 'updated succesfuly !')
-//         })
-//         .catch(err => res.status(400).json('Error deleting ' + err));
-// }
 
 
 exports.updateClub = async(req, res) => {
@@ -199,6 +171,12 @@ exports.deleteMultipleClub = async(req, res) => {
 }
 
 
+
+
+
+
+
+    
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
 // @access  Private

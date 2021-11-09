@@ -18,11 +18,6 @@ exports.getCategoryByDomaine = async(req, res, next) => {
 exports.createDomaine = async(req, res, next) => {
     let club = new domaineModel({
         name: req.body.name,
-
-
-
-
-
     });
 
     await club.save((err) => {
