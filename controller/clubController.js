@@ -49,7 +49,7 @@ exports.createClubs = (req, res, next) => {
             club
                 .save()
                 .then((club) => {
-                   
+
                     category.clubs.push(club._id);
                     category
                         .save()
@@ -66,18 +66,29 @@ exports.createClubs = (req, res, next) => {
 
 
 exports.getAllClubs = async(req, res, next) => {
-    
+
     await clubModel.find().populate('category')
         .then(objet => res.status(200).json(objet))
         .catch(err => res.status(400).json("Error getting objet"))
 }
 
 
-exports.getClubByCategory= async(req, res, next) => {
+exports.getClubByCategory = async(req, res, next) => {
     const club = await categoryModel.findById(req.body.category).populate('clubs')
-       
+
     if (club) {
         res.json(club)
+    } else {
+        res.status(404)
+        throw new Error('club not found')
+    }
+}
+
+exports.getClubByDomaine = async(req, res, next) => {
+    const domain = await domaineModelModel.findById(req.body.id).populate('categories')
+
+    if (domain) {
+        res.json(domain)
     } else {
         res.status(404)
         throw new Error('club not found')
@@ -176,7 +187,7 @@ exports.deleteMultipleClub = async(req, res) => {
 
 
 
-    
+
 // @desc    Create new review
 // @route   POST /api/products/:id/reviews
 // @access  Private

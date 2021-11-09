@@ -38,7 +38,8 @@ export default (app) => {
 
     //////////////////////// Domaine CONTROLLER///////////////////////////
 
-    app.route("/domaine/:id").get(domaineController.getCategoryByDomaine);
+    app.route("/domaine").get(domaineController.getAllDomaines);
+    app.route("/domaine-category").get(domaineController.getCategoryByDomaine);
     app.route("/domaine").post(domaineController.createDomaine);
 
 
