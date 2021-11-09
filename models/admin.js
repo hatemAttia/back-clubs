@@ -28,10 +28,20 @@ var adminSchema = mongoose.Schema({
         required: true
     },
 
+}, {
+    timestamps: true,
 })
 adminSchema.methods.generateTokens = function() {
     const token = jwt.sign({ _id: this._id }, 'privateKey', { expiresIn: "1h" })
     return token;
 };
+
+adminSchema.virtual('id').get(function() {
+    return this._id.toHexString();
+
+});
+adminSchema.set('toJSON', {
+    virtuals: true,
+});
 
 module.exports = mongoose.model('admin', adminSchema)
