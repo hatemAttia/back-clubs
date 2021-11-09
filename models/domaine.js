@@ -1,25 +1,26 @@
 var mongoose = require('mongoose');
 // Setup schema
-var categorySchema = mongoose.Schema({
+var domaineSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    clubs: [{
+    categories: [{
 
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'club',
+        ref: 'category',
 
     }],
+
 }, {
     timestamps: true,
 });
 
-categorySchema.virtual('id').get(function() {
+domaineSchema.virtual('id').get(function() {
     return this._id.toHexString();
 
 });
-categorySchema.set('toJSON', {
+domaineSchema.set('toJSON', {
     virtuals: true,
 });
 
@@ -27,4 +28,7 @@ categorySchema.set('toJSON', {
 
 
 
-module.exports = mongoose.model('category', categorySchema)
+
+
+
+module.exports = mongoose.model('domaine', domaineSchema)

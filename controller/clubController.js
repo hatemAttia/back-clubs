@@ -1,5 +1,6 @@
 const clubModel = require("../models/club");
 const categoryModel = require("../models/category");
+const domaineModel = require("../models/domaine");
 const mongoose = require('mongoose');
 
 
@@ -34,6 +35,42 @@ exports.createClub = async(req, res, next) => {
 
 
 
+exports.createClubs = (req, res, next) => {
+    categoryModel.findById({ _id: req.body.category.id })
+        .exec()
+        .then((category) => {
+            let club = new clubModel({
+                name: req.body.name,
+                description: req.body.description,
+                image: 'club.png',
+                adresse: req.body.adresse,
+                longitude: req.body.longitude,
+                latitude: req.body.latitude,
+
+                email: req.body.email,
+                num: req.body.num
+
+
+
+            });
+            club
+                .save()
+                .then((club) => {
+                    category.clubs.push(club._id);
+                    category
+                        .save()
+                        .then((category) => res.status(200).json(category))
+                        .catch((err) =>
+                            res.status(400).json("Error on category save: " + err)
+                        );
+                })
+                .catch((err) => res.status(400).json("Error on club save: " + err));
+        })
+        .catch((err) => res.status(400).json("Error: " + err));
+};
+
+
+
 exports.getAllClubs = async(req, res, next) => {
     //<= $lte >= gte  age:{$lte:10} < lt > gt ==eq $in  nin []
     //find(element=>element.modelId==req.params.id)
@@ -41,6 +78,20 @@ exports.getAllClubs = async(req, res, next) => {
         .then(objet => res.status(200).json(objet))
         .catch(err => res.status(400).json("Error getting objet"))
 }
+
+
+exports.getClubByDomaine = async(req, res, next) => {
+    const club = await categoryModel.findById(req.body.category).populate('category', ['club', 'name'])
+        // .then(objet => res.status(200).json(objet))
+        // .catch(err => res.status(400).json("Error getting objet"))
+    if (club) {
+        res.json(club)
+    } else {
+        res.status(404)
+        throw new Error('club not found')
+    }
+}
+
 
 
 exports.welcome = async(req, res) => {
@@ -146,3 +197,54 @@ exports.deleteMultipleClub = async(req, res) => {
         throw new Error('Clubs not found')
     }
 }
+
+
+// @desc    Create new review
+// @route   POST /api/products/:id/reviews
+// @access  Private
+const createProductReview = (async(req, res) => {
+    const { rating, comment } = req.body
+
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+        const alreadyReviewed = product.reviews.find(
+            (r) => r.user.toString() === req.user._id.toString()
+        )
+
+        if (alreadyReviewed) {
+            res.status(400)
+            throw new Error('Product already reviewed')
+        }
+
+        const review = {
+            name: req.user.name,
+            rating: Number(rating),
+            comment,
+            user: req.user._id,
+        }
+
+        product.reviews.push(review)
+
+        product.numReviews = product.reviews.length
+
+        product.rating =
+            product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+            product.reviews.length
+
+        await product.save()
+        res.status(201).json({ message: 'Review added' })
+    } else {
+        res.status(404)
+        throw new Error('Product not found')
+    }
+})
+
+// @desc    Get top rated products
+// @route   GET /api/products/top
+// @access  Public
+const getTopProducts = (async(req, res) => {
+    const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+
+    res.json(products)
+})

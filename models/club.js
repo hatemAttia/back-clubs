@@ -1,4 +1,23 @@
 var mongoose = require('mongoose');
+
+
+
+const reviewSchema = mongoose.Schema({
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User',
+    },
+}, {
+    timestamps: true,
+})
+
+
+
+
 // Setup schema
 var clubSchema = mongoose.Schema({
     name: {
@@ -31,12 +50,7 @@ var clubSchema = mongoose.Schema({
         required: true,
 
     },
-    category: {
 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'category',
-
-    },
     email: {
         type: String,
         required: true,
@@ -47,10 +61,29 @@ var clubSchema = mongoose.Schema({
         required: true,
 
     },
+    status: {
+        type: String,
+        enum: ['Etatique', 'privé'],
+        // required: true,
+
+    },
+    reviews: [reviewSchema],
+    rating: {
+        type: Number,
+        // required: true,
+        default: 0,
+    },
+    numReviews: {
+        type: Number,
+        // required: true,
+        default: 0,
+    },
 
 
 
 
+}, {
+    timestamps: true,
 });
 clubSchema.virtual('id').get(function() {
     return this._id.toHexString();

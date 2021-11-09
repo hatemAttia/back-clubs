@@ -2,6 +2,7 @@ const categoryController = require('../controller/categoryController');
 const clubController = require('../controller/clubController')
 const sendController = require('../controller/sendMailController');
 const adminController = require('../controller/adminController');
+const domaineController = require('../controller/domaineController');
 import { uploadimages } from "../config/multer"
 export default (app) => {
 
@@ -29,7 +30,16 @@ export default (app) => {
     app.route("/club/:id").delete(clubController.deleteClub);
     app.route("/club/:id").put(clubController.updateClub);
     app.route("/club-img/:id").post(uploadimages.single("file"), clubController.updateImage);
+    app.route("/club-category").get(clubController.getClubByDomaine);
+
 
     //////////////////////// Mail CONTROLLER///////////////////////////
     app.route("/send").post(sendController.sendMail);
+
+    //////////////////////// Domaine CONTROLLER///////////////////////////
+
+    app.route("/domaine/:id").get(domaineController.getCategoryByDomaine);
+    app.route("/domaine").post(domaineController.createDomaine);
+
+
 };
