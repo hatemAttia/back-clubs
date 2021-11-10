@@ -4,36 +4,36 @@ const domaineModel = require("../models/domaine");
 const mongoose = require('mongoose');
 
 
-exports.createClub = async(req, res, next) => {
-    let club = new clubModel({
-        name: req.body.name,
-        description: req.body.description,
-        image: 'club.png',
-        adresse: req.body.adresse,
-        longitude: req.body.longitude,
-        latitude: req.body.latitude,
-        category: mongoose.Types.ObjectId(req.body.category.id),
-        // category: req.body.category._id,
-        email: req.body.email,
-        num: req.body.num
+// exports.createClub = async(req, res, next) => {
+//     let club = new clubModel({
+//         name: req.body.name,
+//         description: req.body.description,
+//         image: 'club.png',
+//         adresse: req.body.adresse,
+//         longitude: req.body.longitude,
+//         latitude: req.body.latitude,
+//         category: mongoose.Types.ObjectId(req.body.category.id),
+//         // category: req.body.category._id,
+//         email: req.body.email,
+//         num: req.body.num
 
-    });
+//     });
 
-    await club.save((err) => {
-        if (err) {
-            res.json({ success: false, message: err })
+//     await club.save((err) => {
+//         if (err) {
+//             res.json({ success: false, message: err })
 
-        } else {
-            res.json({ success: true, club })
-        }
+//         } else {
+//             res.json({ success: true, club })
+//         }
 
-    })
-};
+//     })
+// };
 
 
 
 exports.createClubs = (req, res, next) => {
-    categoryModel.findById({ _id: req.body.category })
+    categoryModel.findById({ _id: req.body.category.id })
         .exec()
         .then((category) => {
             let club = new clubModel({
@@ -53,7 +53,7 @@ exports.createClubs = (req, res, next) => {
                     category.clubs.push(club._id);
                     category
                         .save()
-                        .then((category) => res.status(200).json(category))
+                        .then((category) => res.status(200).json(club))
                         .catch((err) =>
                             res.status(400).json("Error on category save: " + err)
                         );
