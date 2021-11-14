@@ -11,7 +11,7 @@ export default (app) => {
     ////////////////////////Admin CONTROLLER///////////////////////////
 
     // app.route("/admin/register").post(adminController.register);
-    // app.route("/admin").post(adminController.login);
+     app.route("/admin").post(adminController.login);
     // app.route("/admin/club").post(clubController.createClubs);
     // app.route("/admin/club").get(clubController.getAllClubs);
     // app.route("/admin/club/:id").delete(clubController.deleteClub);
@@ -30,7 +30,7 @@ export default (app) => {
     app.route("/club").post(clubController.createClubs);
     app.route("/club/:id").delete(clubController.deleteClub);
     app.route("/club/:id").put(clubController.updateClub);
-    app.route("/club-img/:id").post(uploadimages.single("file"), clubController.updateImage);
+    app.route("/club-img/:id").post(uploadimages.single("file"),clubController.updateImage);
     app.route("/club-category").get(clubController.getClubByCategory);
 
 
