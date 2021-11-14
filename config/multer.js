@@ -1,9 +1,9 @@
 var multer = require('multer')
 const path = require("path")
+
 const storage = multer.diskStorage({
 
     destination: (req, file, callBack) => {
-
         console.log(file.filename);
         if (!file) {
             const error = new Error('No File')
@@ -17,21 +17,8 @@ const storage = multer.diskStorage({
     }
 })
 
-const storageImage = multer.diskStorage({
-    destination: "public/uploads",
-    filename: function(req, file, cb) {
-        cb(
-            null,
-            path.basename(file.originalname, path.extname(file.originalname)) +
-            "-" +
-            Date.now() +
-            path.extname(file.originalname)
-        );
-    },
-});
 
 const uploadimages = multer({
-
     storage: storage,
     // limits: { fileSize: 1000000 },
     // fileFilter: function(req, file, cd) {

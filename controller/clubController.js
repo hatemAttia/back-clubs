@@ -3,7 +3,6 @@ const categoryModel = require("../models/category");
 const domaineModel = require("../models/domaine");
 const mongoose = require('mongoose');
 
-
 // exports.createClub = async(req, res, next) => {
 //     let club = new clubModel({
 //         name: req.body.name,
@@ -29,8 +28,6 @@ const mongoose = require('mongoose');
 
 //     })
 // };
-
-
 
 exports.createClubs = (req, res, next) => {
     categoryModel.findById({ _id: req.body.category.id })
