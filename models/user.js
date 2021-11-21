@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 // Setup schema
-var adminSchema = mongoose.Schema({
+var userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true
@@ -27,21 +27,26 @@ var adminSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    // ville: {
+    //     type: String,
+    //     required: true
+    // },
+
 
 }, {
     timestamps: true,
 })
-adminSchema.methods.generateTokens = function() {
+userSchema.methods.generateTokens = function() {
     const token = jwt.sign({ _id: this._id, email: this.email, role: this.role }, 'privateKey', { expiresIn: "1h" })
     return token;
 };
 
-adminSchema.virtual('id').get(function() {
+userSchema.virtual('id').get(function() {
     return this._id.toHexString();
 
 });
-adminSchema.set('toJSON', {
+userSchema.set('toJSON', {
     virtuals: true,
 });
 
-module.exports = mongoose.model('admin', adminSchema)
+module.exports = mongoose.model('user', userSchema)
