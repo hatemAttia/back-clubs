@@ -68,7 +68,7 @@ var clubSchema = mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Etatique', 'privé'],
+        enum: ['Etatique', 'Privé'],
         // required: true,
 
     },
