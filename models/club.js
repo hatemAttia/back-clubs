@@ -40,6 +40,11 @@ var clubSchema = mongoose.Schema({
         required: true,
 
     },
+    ville: {
+        type: String,
+        required: true
+    },
+
     longitude: {
         type: Number,
         required: true,

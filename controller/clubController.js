@@ -3,7 +3,6 @@ const categoryModel = require("../models/category");
 const domaineModel = require("../models/domaine");
 const mongoose = require('mongoose');
 
-
 // exports.createClub = async(req, res, next) => {
 //     let club = new clubModel({
 //         name: req.body.name,
@@ -30,8 +29,6 @@ const mongoose = require('mongoose');
 //     })
 // };
 
-
-
 exports.createClubs = (req, res, next) => {
     categoryModel.findById({ _id: req.body.category.id })
         .exec()
@@ -41,6 +38,7 @@ exports.createClubs = (req, res, next) => {
                 description: req.body.description,
                 image: 'club.png',
                 adresse: req.body.adresse,
+                ville: req.body.ville,
                 longitude: req.body.longitude,
                 latitude: req.body.latitude,
                 email: req.body.email,
@@ -126,6 +124,7 @@ exports.updateClub = async(req, res) => {
         club.description = req.body.description || club.description
         club.image = req.body.image || club.image
         club.adresse = req.body.adresse || club.adresse
+        club.ville = req.body.ville || club.ville
         club.longitude = req.body.longitude || club.longitude
         club.latitude = req.body.latitude || club.latitude
         club.category = req.body.category || club.category
